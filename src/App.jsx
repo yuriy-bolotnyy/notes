@@ -21,10 +21,18 @@ function App() {
    *    into a real JS array.
    */
   
-  const [notes, setNotes] = React.useState([])
+  const notesFromLocalStorage = JSON.parse(localStorage.getItem('notes'))
+  console.log('Notes from local storage: ', notesFromLocalStorage)
+
+  const [notes, setNotes] = React.useState(notesFromLocalStorage || [])
   const [currentNoteId, setCurrentNoteId] = React.useState(
       (notes[0] && notes[0].id) || ""
   )
+
+  React.useEffect(() => {
+    console.log("Effect run for 'notes' changes")
+    localStorage.setItem('notes', JSON.stringify([]))
+  }, [notes])
   
   function createNewNote() {
       const newNote = {
