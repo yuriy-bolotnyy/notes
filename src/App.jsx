@@ -1,37 +1,26 @@
 import React from 'react'
 import Split from 'react-split'
 import { nanoid } from 'nanoid'
-// import { useState } from 'react'
 
 import Editor from './components/Editor'
 import Sidebar from './components/Sidebar'
 
 import reactLogo from './assets/react.svg'
-import './App.css'
+import './style.css'
 
-function App() {
-  /**
-   * Challenge:
-   * 1. Every time the `notes` array changes, save it 
-   *    in localStorage. You'll need to use JSON.stringify()
-   *    to turn the array into a string to save in localStorage.
-   * 2. When the app first loads, initialize the notes state
-   *    with the notes saved in localStorage. You'll need to
-   *    use JSON.parse() to turn the stringified array back
-   *    into a real JS array.
-   */
-  
-  const notesFromLocalStorage = JSON.parse(localStorage.getItem('notes'))
-  console.log('Notes from local storage: ', notesFromLocalStorage)
-
-  const [notes, setNotes] = React.useState(notesFromLocalStorage || [])
+const App = () => {  
+  const [notes, setNotes] = React.useState(() => {   // State Lazy init, by using an arrow function
+    const notesFromLocalStorage = JSON.parse(localStorage.getItem('notes'))
+    console.log('Notes from local storage: ', notesFromLocalStorage)
+    return notesFromLocalStorage || []
+  })
   const [currentNoteId, setCurrentNoteId] = React.useState(
       (notes[0] && notes[0].id) || ""
   )
 
   React.useEffect(() => {
     console.log("Effect run for 'notes' changes")
-    localStorage.setItem('notes', JSON.stringify([]))
+    localStorage.setItem('notes', JSON.stringify(notes))
   }, [notes])
   
   function createNewNote() {
