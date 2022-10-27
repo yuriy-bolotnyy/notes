@@ -1,7 +1,13 @@
 import React from "react"
 
 export default function Sidebar(props) {
-    const noteElements = props.notes.map((note, index) => (
+    const noteElements = props.notes.map((note, index) => {
+
+        const noteFirstRow = note.body.split('\n')[0].trim()
+        // console.log(`noteFirstRow: '${noteFirstRow}'`)
+        const noteTitle = noteFirstRow
+
+        return (
         <div key={note.id}>
             <div
                 
@@ -10,10 +16,11 @@ export default function Sidebar(props) {
                 }`}
                 onClick={() => props.setCurrentNoteId(note.id)}
             >
-                <h4 className="text-snippet">Note {index + 1}</h4>
+                {/* <h4 className="text-snippet">Note {index + 1}</h4> */}
+                <h4 className="text-snippet">{noteTitle}</h4>
             </div>
         </div>
-    ))
+    )})
 
     return (
         <section className="pane sidebar">
