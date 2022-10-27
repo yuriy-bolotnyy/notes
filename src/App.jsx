@@ -31,6 +31,20 @@ const App = () => {
       setNotes(prevNotes => [newNote, ...prevNotes])
       setCurrentNoteId(newNote.id)
   }
+
+  const moveItemToFront = (arr, id) => {
+    console.log(`array before: ${JSON.stringify(arr)}`)
+    // Find the target element with matching id
+    const elemToMove = arr.find(element => element.id === id)
+    console.log(`arr with '${id}': '${JSON.stringify(elemToMove)}'`)
+    // Filter array, to exclude the target element with matching id
+    arr = arr.filter(element => element.id !== id)
+    // Move the target element to front of the array
+    arr.unshift(elemToMove)
+
+    console.log(`array after: ${JSON.stringify(arr)}`)
+    return arr
+  }
   
   function updateNote(text) {
       setNotes(oldNotes => oldNotes.map(oldNote => {
@@ -38,6 +52,8 @@ const App = () => {
               ? { ...oldNote, body: text }
               : oldNote
       }))
+
+      setNotes(oldNotes => moveItemToFront(oldNotes, currentNoteId))
   }
   
   function findCurrentNote() {
