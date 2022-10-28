@@ -61,6 +61,12 @@ const App = () => {
           return note.id === currentNoteId
       }) || notes[0]
   }
+
+  const deleteNote = (noteId) => {
+    console.log(`Deletion requested: Note Id ${noteId}`)
+    setNotes(oldNotes => oldNotes.filter(oldNote => oldNote.id !== noteId))
+    console.log(`notes.length: ${notes.length}`)
+  }
   
   return (
       <main>
@@ -77,6 +83,7 @@ const App = () => {
                   currentNote={findCurrentNote()}
                   setCurrentNoteId={setCurrentNoteId}
                   newNote={createNewNote}
+                  delNote={deleteNote}
               />
               {
                   currentNoteId && 
